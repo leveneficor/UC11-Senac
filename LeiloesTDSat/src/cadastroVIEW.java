@@ -147,19 +147,27 @@ public class cadastroVIEW extends javax.swing.JFrame {
             // Cria o produto
             ProdutosDTO produto = new ProdutosDTO();
             produto.setNome(nome);
-            produto.setValor(Integer.parseInt(valorTexto));
+            produto.setValor(Integer.parseInt(valorTexto)); // Converte o texto para número
             produto.setStatus("A Venda");
 
             // Chama o DAO para salvar no banco
             ProdutosDAO produtodao = new ProdutosDAO();
             produtodao.cadastrarProduto(produto);
 
-            // Limpa os campos
+            // MENSAGEM DE SUCESSO
+            JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+            // Limpa os campos para o próximo cadastro
             cadastroNome.setText("");
             cadastroValor.setText("");
+            cadastroNome.requestFocus(); // Coloca o cursor de volta no campo Nome
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "O campo 'Valor' deve conter apenas números inteiros!", "Erro", JOptionPane.ERROR_MESSAGE);
+            // MENSAGEM DE ERRO (Se digitarem letras no valor)
+            JOptionPane.showMessageDialog(this, "O campo 'Valor' deve conter apenas números inteiros!", "Erro de Formatação", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            // MENSAGEM DE ERRO (Erros inesperados)
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro inesperado: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_btnCadastrarActionPerformed

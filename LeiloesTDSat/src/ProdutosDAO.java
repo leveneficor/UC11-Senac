@@ -18,13 +18,6 @@ public class ProdutosDAO {
 
         try {
             conn = new conectaDAO().connectDB();
-
-            // Verifica se a conexão foi bem-sucedida
-            if (conn == null) {
-                JOptionPane.showMessageDialog(null, "Falha na conexão com o banco de dados!");
-                return;
-            }
-
             prep = conn.prepareStatement(sql);
 
             prep.setString(1, produto.getNome());
@@ -32,10 +25,11 @@ public class ProdutosDAO {
             prep.setString(3, produto.getStatus());
 
             prep.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso no banco!");
+            // Removida a mensagem de sucesso daqui, pois a tela já exibe.
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar produto: " + e.getMessage());
+            // Mantém a mensagem de erro caso o banco falhe
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar produto no banco: " + e.getMessage());
         } finally {
             try {
                 if (prep != null) {
