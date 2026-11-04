@@ -138,28 +138,27 @@ public class cadastroVIEW extends javax.swing.JFrame {
             String nome = cadastroNome.getText();
             String valorTexto = cadastroValor.getText();
 
-            // valida se os campos estão vazios
+            // Valida se os campos estão vazios
             if (nome.trim().isEmpty() || valorTexto.trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Aviso", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            // cria o produto
+            // Cria o produto
             ProdutosDTO produto = new ProdutosDTO();
             produto.setNome(nome);
-            produto.setValor(Integer.parseInt(valorTexto)); // Converte o texto para número
+            produto.setValor(Integer.parseInt(valorTexto));
             produto.setStatus("A Venda");
 
-            // chama o DAO para salvar no bd
+            // Chama o DAO para salvar no banco
             ProdutosDAO produtodao = new ProdutosDAO();
-            produtodao.cadastrarProduto(produto); // O DAO já mostra a mensagem de sucesso/erro
+            produtodao.cadastrarProduto(produto);
 
             // Limpa os campos
             cadastroNome.setText("");
             cadastroValor.setText("");
 
         } catch (NumberFormatException e) {
-            // erro
             JOptionPane.showMessageDialog(this, "O campo 'Valor' deve conter apenas números inteiros!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
 
