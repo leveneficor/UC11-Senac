@@ -1,4 +1,3 @@
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,21 +24,14 @@ public class ProdutosDAO {
             prep.setString(3, produto.getStatus());
 
             prep.executeUpdate();
-            // Removida a mensagem de sucesso daqui, pois a tela já exibe.
 
         } catch (SQLException e) {
-            // Mantém a mensagem de erro caso o banco falhe
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar produto no banco: " + e.getMessage());
         } finally {
             try {
-                if (prep != null) {
-                    prep.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-            }
+                if (prep != null) prep.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {}
         }
     }
 
@@ -66,22 +58,15 @@ public class ProdutosDAO {
             JOptionPane.showMessageDialog(null, "Erro ao listar produtos: " + e.getMessage());
         } finally {
             try {
-                if (resultset != null) {
-                    resultset.close();
-                }
-                if (prep != null) {
-                    prep.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-            }
+                if (resultset != null) resultset.close();
+                if (prep != null) prep.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {}
         }
         return listagem;
     }
 
-    // Método para vender um produto (atualizar o status)
+    // Método para vender um produto (atualizar o status para "Vendido")
     public void venderProduto(int id) {
         String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
 
@@ -102,20 +87,18 @@ public class ProdutosDAO {
             JOptionPane.showMessageDialog(null, "Erro ao vender produto: " + e.getMessage());
         } finally {
             try {
-                if (prep != null) {
-                    prep.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-            }
+                if (prep != null) prep.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {}
         }
     }
 
+    // Método para buscar todos os produtos com status 'Vendido'
     public ArrayList<ProdutosDTO> listarProdutosVendidos() {
         ArrayList<ProdutosDTO> listagem = new ArrayList<>();
-        String sql = "SELECT * FROM produtos WHERE status = 'Vendido'"; // Filtro de vendidos
+        
+        // O SQL busca apenas os itens onde o status é 'Vendido'
+        String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
 
         try {
             conn = new conectaDAO().connectDB();
@@ -135,17 +118,10 @@ public class ProdutosDAO {
             JOptionPane.showMessageDialog(null, "Erro ao listar produtos vendidos: " + e.getMessage());
         } finally {
             try {
-                if (resultset != null) {
-                    resultset.close();
-                }
-                if (prep != null) {
-                    prep.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-            }
+                if (resultset != null) resultset.close();
+                if (prep != null) prep.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {}
         }
         return listagem;
     }

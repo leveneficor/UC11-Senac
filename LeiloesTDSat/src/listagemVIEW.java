@@ -131,20 +131,25 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
         try {
+            // Pega o ID que o usuário digitou
             String idTexto = id_produto_venda.getText();
+
+            // Verifica se o campo está vazio
             if (idTexto.trim().isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Digite o ID do produto para vender.", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
+            // Converte o texto para número
             int id = Integer.parseInt(idTexto);
-            ProdutosDAO produtosdao = new ProdutosDAO();
 
-            // Chama o método que atualiza o status no banco de dados real
+            // Chama a classe DAO para atualizar no banco de dados
+            ProdutosDAO produtosdao = new ProdutosDAO();
             produtosdao.venderProduto(id);
 
+            // Limpa o campo e recarrega a tabela para mostrar o status atualizado
             id_produto_venda.setText("");
-            listarProdutos(); // Recarrega a tabela
+            listarProdutos();
 
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Por favor, digite um número de ID válido.", "Erro", javax.swing.JOptionPane.ERROR_MESSAGE);
@@ -152,7 +157,9 @@ public class listagemVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        javax.swing.JOptionPane.showMessageDialog(this, "Funcionalidade de consultar vendas em construção.");
+        // Cria a tela de vendas e a exibe
+        vendasVIEW telaVendas = new vendasVIEW();
+        telaVendas.setVisible(true);
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
