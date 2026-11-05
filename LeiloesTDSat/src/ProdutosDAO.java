@@ -25,10 +25,8 @@ public class ProdutosDAO {
             prep.setString(3, produto.getStatus());
 
             prep.executeUpdate();
-            // Removida a mensagem de sucesso daqui, pois a tela já exibe.
 
         } catch (SQLException e) {
-            // Mantém a mensagem de erro caso o banco falhe
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar produto no banco: " + e.getMessage());
         } finally {
             try {
@@ -81,7 +79,7 @@ public class ProdutosDAO {
         return listagem;
     }
 
-    // Método para vender um produto (atualizar o status)
+    // Método para vender um produto (atualizar o status para "Vendido")
     public void venderProduto(int id) {
         String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
 
@@ -111,42 +109,5 @@ public class ProdutosDAO {
             } catch (SQLException e) {
             }
         }
-    }
-
-    public ArrayList<ProdutosDTO> listarProdutosVendidos() {
-        ArrayList<ProdutosDTO> listagem = new ArrayList<>();
-        String sql = "SELECT * FROM produtos WHERE status = 'Vendido'"; // Filtro de vendidos
-
-        try {
-            conn = new conectaDAO().connectDB();
-            prep = conn.prepareStatement(sql);
-            resultset = prep.executeQuery();
-
-            while (resultset.next()) {
-                ProdutosDTO produto = new ProdutosDTO();
-                produto.setId(resultset.getInt("id"));
-                produto.setNome(resultset.getString("nome"));
-                produto.setValor(resultset.getInt("valor"));
-                produto.setStatus(resultset.getString("status"));
-
-                listagem.add(produto);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao listar produtos vendidos: " + e.getMessage());
-        } finally {
-            try {
-                if (resultset != null) {
-                    resultset.close();
-                }
-                if (prep != null) {
-                    prep.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-            }
-        }
-        return listagem;
     }
 }
